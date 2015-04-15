@@ -11,9 +11,11 @@
 
 ## 基本用法
 
-### Slideshow.init( String:className )
+### Slideshow.init( String:className [, Element: startContainer] )
 
 初始化一个幻灯片，并返回一个由所有目标 class 的元素组成的 `NodeTree` 对象。
+
+`startContainer` 指定了查找起点，默认为 `document.body`。
 
 **注意：**
 
@@ -27,6 +29,10 @@
 ### Slideshow.next()
 
 播放下一帧。
+
+### Slideshow.jumpTo( String:indexChain )
+
+跳转到指定帧，接受一个链式索引如 `'1.2.3'`。
 
 ### Slideshow.finder( String:className [, Element: startContainer] )
 

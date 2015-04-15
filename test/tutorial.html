@@ -55,7 +55,7 @@
         <h2 class="title">初始化</h2>
 
         <div class="content">
-            <p class="paragraph timeline" data-title="构造幻灯片">使用 <code>Slideshow.init( String:className )</code>
+            <p class="paragraph timeline" data-title="构造幻灯片">使用 <code>Slideshow.init( String:className [, Element: startContainer] )</code>
                 来初始化一个幻灯片。</p>
             <figure>
                 <figcaption>Wow! Such NTR!</figcaption>
@@ -74,7 +74,7 @@
 
                 <li class="paragraph timeline" data-title=".prev">播放上一帧：<code>Slideshow.prev()</code></li>
 
-                <li class="paragraph timeline" data-title=".jumpto">转到指定帧：<code>Slideshow.jumpTo()</code></li>
+                <li class="paragraph timeline" data-title=".jumpto">转到指定帧：<code>Slideshow.jumpTo( String:indexChain )</code></li>
 
                 <li class="paragraph timeline" data-title=".addListener">也可以注册一个事件监听：<code>Slideshow.addListener(
                     Function: fn )</code></li>
