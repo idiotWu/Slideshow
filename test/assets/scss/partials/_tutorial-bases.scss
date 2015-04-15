@@ -1,0 +1,41 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: $basic-color;
+  font-size: 10vh;
+  background: radial-gradient(#f7fbfc 20%, #d1d8e9 80%);
+  font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+
+del {
+  color: $del-color;
+  margin: 0 3px;
+}
+
+mark {
+  color: $mark-color;
+  background: $mark-bg;
+  padding: 0 3px;
+}
+
+strong {
+  color: $strong-color;
+}
+
+.timeline {
+  opacity: 0;
+  transition: opacity .3s;
+  animation-duration: 1s;
+  backface-visibility: hidden;
+
+  &.show {
+    opacity: 1;
+  }
+
+  &:not(.show) {
+    animation: none;
+  }
+}

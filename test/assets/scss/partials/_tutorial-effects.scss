@@ -1,0 +1,30 @@
+#effects {
+  .effect {
+    position: absolute;
+    opacity: 1;
+    transition: opacity 0s;
+    animation-duration: 1s;
+    backface-visibility: hidden;
+  }
+
+  @for $i from 1 through 16 {
+    .effect:nth-child(#{$i}) {
+      transition-delay: ($i - 1) * .5s;
+      animation-delay: ($i - 1) * .5s;
+    }
+  }
+
+  &:not(.show) {
+    .effect {
+      opacity: 0;
+      animation: none;
+      transition-delay: 0s;
+    }
+  }
+
+  &.played {
+    .effect {
+      animation-play-state: paused;
+    }
+  }
+}

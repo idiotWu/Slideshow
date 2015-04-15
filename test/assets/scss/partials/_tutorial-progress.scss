@@ -1,0 +1,18 @@
+#progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: .1rem;
+  background: #ccc;
+
+  .line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: $button-color;
+    transition: width .3s ease-out;
+  }
+}

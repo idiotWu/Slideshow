@@ -1,0 +1,21 @@
+%triangle {
+  content: '';
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+@mixin triangle($direction, $size, $borderColor) {
+  @extend %triangle;
+  border: $size dashed transparent;
+
+  @if $direction == top {
+    border-bottom: $size solid $borderColor;
+  } @else if $direction == right {
+    border-left: $size solid $borderColor;
+  } @else if $direction == bottom {
+    border-top: $size solid $borderColor;
+  } @else if $direction == left {
+    border-right: $size solid $borderColor;
+  }
+}

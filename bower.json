@@ -1,0 +1,23 @@
+{
+  "name": "Slideshow",
+  "version": "0.0.1",
+  "description": "A simple slideshow framework.",
+  "license": "MIT",
+  "dependencies": {
+    "animate.css": "~3.2.6"
+  },
+  "devDependencies": {
+    "mocha": "~2.2.4",
+    "chai": "~2.2.0",
+    "chai-as-promised": "~4.3.2"
+  },
+  "authors": [
+    "Dolphin Wood <dolphin.w.e@gmail.com>"
+  ],
+  "homepage": "https://idiotwu.me",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src/assets/vendor"
+  ]
+}

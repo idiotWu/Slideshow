@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutorial</title>
+    <link rel="stylesheet" href="../_component/animate.css/animate.min.css">
+    <link rel="stylesheet" href="css/tutorial.css">
+</head>
+<body>
+<main id="slideshow">
+    <nav id="slide-nav">
+
+    </nav>
+    <button id="open-nav">展开导航</button>
+
+    <section id="intro" class="timeline pages" data-title="Slideshow 简介">
+        <h2 class="title">什么是 Slideshow.js</h2>
+
+        <div class="content">
+            <p class="paragraph timeline fadeInUp" data-title="什么是 Slideshow.js">一个极其轻量的
+                <del>轮播图</del>
+                幻灯片创建框架，助你摆脱 PowerPoint 令人作呕的动画控制！
+            </p>
+            <figure>
+                <figcaption>PPT Sucks!</figcaption>
+                <img src="images/ppt-sucks.png" alt="ppt-sucks" id="ppt-sucks" class="timeline" data-title="PPT Sucks!">
+                <img src="images/ban.png" alt="no-ppt" class="timeline" id="no-ppt" data-title="no-ppt">
+            </figure>
+        </div>
+    </section>
+
+    <section id="compatibility" class="timeline pages" data-title="浏览器兼容">
+        <h2 class="title">浏览器兼容</h2>
+
+        <div class="content">
+            <ul>
+                <li class="timeline rotateInDownLeft" data-title="IE">IE
+                    <del id="no-ie" class="timeline" data-title="no-IE6">6+</del>
+                    <mark class="timeline" data-title="IE10+">10+</mark>
+                </li>
+                <li class="timeline rotateInUpRight" data-title="Chrome">Chrome
+                    <mark>23+</mark>
+                </li>
+                <li class="timeline rotateInDownRight" data-title="Firefox">Firefox
+                    <mark>21+</mark>
+                </li>
+                <li class="timeline rotateInUpLeft" data-title="Safari">Safari
+                    <mark>6+</mark>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="init" class="timeline pages" data-title="初始化">
+        <h2 class="title">初始化</h2>
+
+        <div class="content">
+            <p class="paragraph timeline" data-title="构造幻灯片">使用 <code>Slideshow.init( String:className )</code>
+                来初始化一个幻灯片。</p>
+            <figure>
+                <figcaption>Wow! Such NTR!</figcaption>
+                <img src="images/such-ntr.png" alt="such-ntr" id="init-shot" class="timeline" data-title="such NTR!">
+                <img src="images/wow.png" alt="wow" id="doge" class="timeline" data-title="doge">
+            </figure>
+        </div>
+    </section>
+
+    <section id="usage" class="timeline pages" data-title="用法">
+        <h2 class="title">基本用法</h2>
+
+        <div class="content">
+            <ul>
+                <li class="paragraph timeline" data-title=".next">播放下一帧：<code>Slideshow.next()</code></li>
+
+                <li class="paragraph timeline" data-title=".prev">播放上一帧：<code>Slideshow.prev()</code></li>
+
+                <li class="paragraph timeline" data-title=".jumpto">转到指定帧：<code>Slideshow.jumpto()</code></li>
+
+                <li class="paragraph timeline" data-title=".addListener">也可以注册一个事件监听：<code>Slideshow.addListener(
+                    Function: fn )</code></li>
+
+                <li class="paragraph timeline" data-title=".removeListener">或者移除所有的监听：<code>Slideshow.removeListener()</code></li>
+            </ul>
+
+        </div>
+    </section>
+
+    <section id="animation-control" class="timeline pages" data-title="动画控制">
+        <h2 class="title">动画控制</h2>
+
+        <div class="content">
+            <ul>
+                <li class="timeline" data-title="动画添加">当动画帧被激活时，对应元素会被添加上 <code>show</code> 的 class，最顶层的元素只有在
+                    <strong>所有子项播放完成后</strong>
+                    ，这个 class 才会被移除。
+                </li>
+                <li class="timeline" data-title="动画添加">被播放过的动画会被加上 <code>played</code> class，最顶层的元素只有在
+                    <strong>所有子项播放完成后</strong>
+                    ，这个 class 才会被加上。
+                </li>
+                <li class="timeline" data-title="动画添加">所以可以使用 CSS3 Animation 来添加动画。</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="effects" class="timeline pages" data-title="特效">
+        <h2 class="title">特效</h2>
+
+        <div class="content">
+            <span class="effect zoomInUp">Animate.css</span>
+            <span class="effect bounce">特效</span>
+            <span class="effect flash">特效</span>
+            <span class="effect rubberBand">特效</span>
+            <span class="effect shake">特效</span>
+            <span class="effect swing">特效</span>
+            <span class="effect tada">特效</span>
+            <span class="effect wobble">特效</span>
+            <span class="effect bounceInRight">duang~</span>
+            <span class="effect fadeInUp">duang~</span>
+            <span class="effect flip">duang~</span>
+            <span class="effect lightSpeedIn">duang~</span>
+            <span class="effect rotateIn">duang~</span>
+            <span class="effect slideInDown">duang~</span>
+            <span class="effect zoomInDown">duang~</span>
+            <span class="effect hinge">duang~</span>
+            <span class="effect rollIn">duang~</span>
+        </div>
+    </section>
+
+    <section id="question" class="timeline pages" data-title="Q&A">
+        <h2 class="title">Q&amp;A</h2>
+
+        <div class="content">
+            <ol>
+                <li class="question timeline" data-title="Q1">
+                    <p class="q">Q: 为什么我只能创建一个幻灯片？</p>
+
+                    <p class="a">A: 为什么你想要同时播放多个幻灯片？</p>
+                </li>
+                <li class="question timeline" data-title="Q2">
+                    <p class="q">Q: 我 init 了以后怎么什么都没有发生？</p>
+
+                    <p class="a">A: 没写样式。</p>
+                </li>
+                <li class="question timeline"  data-title="Q3">
+                    <p class="q">Q: 为什么要自己写动画？我不会！</p>
+
+                    <p class="a">A: 出门左转 <a href="http://lab.hakim.se/reveal-js/" target="_blank">reveal.js</a>。
+                    </p>
+                </li>
+                <li class="question timeline"  data-title="Q4">
+                    <p class="q">Q: 这是什么狗屎插件！开发者吃翔！</p>
+
+                    <p class="a">A: ...</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section id="godie" class="timeline pages" data-title="Go Die">
+        <img src="images/btodie.jpg">
+    </section>
+
+    <section id="end" class="timeline pages" data-title="END">
+        <h1>谢谢观赏</h1>
+    </section>
+    <footer id="progress"><div class="line"></div></footer>
+</main>
+
+<aside id="control">
+    <div class="arrow next disable"></div>
+    <div class="arrow prev"></div>
+</aside>
+
+<script src="../build/Slideshow.js"></script>
+<script src="js/tutorial.js"></script>
+</body>
+</html>

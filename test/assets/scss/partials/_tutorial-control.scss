@@ -1,0 +1,32 @@
+#control {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+}
+
+.arrow {
+  cursor: pointer;
+  transform: opacity .5s;
+
+  &:hover {
+    opacity: .8;
+  }
+
+  &.next {
+    @include triangle('right', $button-size, $button-color);
+    float: right;
+    margin-left: 30px;
+    border-left-width: 20px;
+  }
+
+  &.prev {
+    @include triangle('left', $button-size, $button-color);
+    float: left;
+    border-right-width: 20px;
+  }
+
+  &.disable {
+    cursor: no-drop;
+    opacity: .5 !important;
+  }
+}

@@ -1,0 +1,132 @@
+#slide-nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: $nav-width;
+  height: 100%;
+  padding: 1em;
+  font-size: .2rem;
+  color: $nav-color;
+  background: $nav-bg;
+  overflow: auto;
+  z-index: 99;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transform: translate3d(-$nav-width, 0, 0);
+  box-shadow: inset -3px 0 6px rgba(0, 0, 0, .7);
+}
+
+#open-nav {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 45px;
+  height: 45px;
+  z-index: 1000;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  font-size: 0;
+  background-color: $nav-bg;
+  color: #fff;
+  cursor: pointer;
+  opacity: .3;
+  border-radius: 50%;
+  box-shadow: 0 3px 5px $nav-bg;
+  transition: all .5s;
+  
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 80%;
+    height: 10%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .open & {
+    opacity: .7;
+    transform: rotate(360deg - 45deg);
+  }
+}
+
+
+#preview-list {
+  margin: 0;
+  padding: 0;
+
+  > li {
+    border-bottom: 1px solid darken($nav-bg, 50%);
+    padding: .5em 1em !important;
+
+    &:after {
+      top: 1.3em !important;
+    }
+  }
+
+  li {
+    position: relative;
+    padding: 0 1em;
+    cursor: pointer;
+    line-height: 2;
+    list-style: none;
+    user-select: none;
+    transition: color .3s;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:before {
+      content: attr(data-index-chain);
+      padding-right: 1em;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: .5em;
+      height: .5em;
+      background: $button-color;
+      border-radius: 50%;
+      left: 0;
+      top: .7em;
+      opacity: 0;
+      transform: scale(0);
+      transition: all .3s;
+    }
+
+    &.cur {
+      color: #fff;
+
+      &:after {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      > ol {
+        color: $nav-color;
+      }
+    }
+
+    &:hover {
+      color: #fff;
+      
+      > ol {
+        color: $nav-color;
+      }
+    }
+  }
+}
+

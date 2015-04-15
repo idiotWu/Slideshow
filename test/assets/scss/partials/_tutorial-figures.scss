@@ -1,0 +1,26 @@
+figure {
+  flex: $figure-flex;
+  position: relative;
+
+  img {
+    @extend %center;
+    max-height: 100%;
+  }
+}
+
+figcaption {
+  position: absolute;
+  visibility: hidden;
+}
+
+#init-shot {
+  transition: all .5s;
+  &.played {
+    -webkit-filter: invert(55%);
+  }
+}
+
+#doge {
+  border-radius: 50%;
+  box-shadow: 0 0 10px #000;
+}

@@ -1,0 +1,22 @@
+code, pre {
+  font-family: Consolas,Monaco,"Andale Mono",monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 4;
+  hyphens: none;
+}
+
+:not(pre)>code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: $code-color;
+  white-space: inherit;
+  background-color: $code-bg;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-weight: 400;
+}
