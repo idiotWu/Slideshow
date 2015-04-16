@@ -57,26 +57,33 @@ var Slideshow = function (Slideshow) {
         }
 
         var ntrList = target.flatten(true),
-            length = ntrList.length - 1;
+            length = ntrList.length - 1,
+            hasItem = false;
 
-        ntrList.some(function (ntr, index) {
-            var elem = ntr.element,
-                curIndexChain = ntr.indexChain;
+        ntrList.forEach(function (ntr, index) {
+            var elem = ntr.element;
 
             if (isRemoveClass) {
                 elem.classList.remove('show');
                 elem.classList.remove('played');
-            } else {
-                elem.classList.add('show');
-
-                if (ntr.depth === 1 || index === length) {
-                    elem.classList.remove('played');
-                } else {
-                    elem.classList.add('played');
-                }
+                return;
             }
 
-            return curIndexChain === indexList;
+            if (!hasItem) {
+                elem.classList.add('show');
+            } else {
+                elem.classList.remove('show');
+            }
+
+            if (ntr.depth === 1 || index === length) {
+                elem.classList.remove('played');
+            } else {
+                elem.classList.add('played');
+            }
+
+            if (ntr.indexChain === indexList) {
+                hasItem = true;
+            }
         });
     };
 

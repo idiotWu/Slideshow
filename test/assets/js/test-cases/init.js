@@ -41,6 +41,7 @@
 
     var ntr = Slideshow.finder('a', container),
         originElems = container.querySelectorAll('.a'),
+        markedElem = container.querySelector('[data-index-chain="1.0.0.0"]'),
         elemCount = originElems.length,
         NodeTree = ntr.constructor,
         every = Function.prototype.call.bind(Array.prototype.every);
