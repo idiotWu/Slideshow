@@ -63,15 +63,26 @@
             return;
         }
 
-        if (endPos.x - startPos.x > 30 || endPos.y - startPos.y > 30) {
-            return Slideshow.prev();
-        }
-
-        if (endPos.x - startPos.x < -30 || endPos.y - startPos.y < -30) {
-            return Slideshow.next();
-        }
+        var moved = {
+            x: endPos.x - startPos.x,
+            y: endPos.y - startPos.y
+        };
 
         startPos = endPos = null;
+
+        if (Math.abs(moved.x) > 30 && Math.abs(moved.y) < 75) {
+            // horizontal
+            return moved.x > 0 ? Slideshow.prev() : Slideshow.next();
+        }
+
+        if (Math.abs(moved.y) > 30 && Math.abs(moved.x) < 75) {
+            // horizontal
+            return moved.y > 0 ? Slideshow.prev() : Slideshow.next();
+        }
+
+        var winner = Math.abs(moved.x) > Math.abs(moved.y) ? moved.x : moved.y;
+
+        return winner > 0 ? Slideshow.prev() : Slideshow.next();
     };
 
     document.addEventListener('touchstart', setStart);
