@@ -70,6 +70,10 @@
 
         startPos = endPos = null;
 
+        if (Math.abs(moved.x) < 30 && Math.abs(moved.y) < 30) {
+            return;
+        }
+
         if (Math.abs(moved.x) > 30 && Math.abs(moved.y) < 75) {
             // horizontal
             return moved.x > 0 ? Slideshow.prev() : Slideshow.next();
