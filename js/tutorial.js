@@ -46,8 +46,13 @@
             prevBtn.classList.add('disable');
         } else if (curIndex === length) {
             nextBtn.classList.add('disable');
-        } else {
+        }
+
+        if (curIndex > 0) {
             prevBtn.classList.remove('disable');
+        }
+
+        if (curIndex < length) {
             nextBtn.classList.remove('disable');
         }
     });
@@ -69,7 +74,7 @@
     });
 
     document.getElementById('open-nav')
-        .addEventListener('click', function() {
+        .addEventListener('click', function () {
             var isOpen = main.classList.contains('open');
 
             if (isOpen) {
