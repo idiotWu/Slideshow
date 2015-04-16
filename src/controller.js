@@ -247,5 +247,17 @@ var Slideshow = function (Slideshow) {
         callbacks.length = 0;
     };
 
+    // 监听 hashchange
+    window.addEventListener('hashchange', function () {
+        var indexChain = location.hash.slice(1),
+            curIndexChain = flatFlow[currentIndex].indexChain;
+
+        if (!indexChain || indexChain === curIndexChain) {
+            return;
+        }
+
+        Slideshow.jumpTo(indexChain);
+    });
+
     return Slideshow;
 }(window.Slideshow || {});

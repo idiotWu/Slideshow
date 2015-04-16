@@ -10,7 +10,8 @@ module.exports = function (grunt) {
         dir: {
             src: 'src',
             build: 'build',
-            release: 'release'
+            release: 'release',
+            plugins: '/plugins'
         },
 
         testDir: {
@@ -20,6 +21,12 @@ module.exports = function (grunt) {
             scss: '<%= testDir.assets %>/scss',
             images: '<%= testDir.assets %>/images',
             testCases: '<%= testDir.js %>/test-cases'
+        },
+
+        testOutput: {
+            js: '<%= testDir.base %>/js',
+            css: '<%= testDir.base %>/css',
+            images: '<%= testDir.base %>/images'
         },
 
         tag: {
@@ -75,7 +82,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: '<%= testDir.scss %>',
                     src: '*.scss',
-                    dest: '<%= testDir.base %>/css',
+                    dest: '<%= testOutput.css %>',
                     ext: '.css'
                 }]
             }
@@ -87,7 +94,7 @@ module.exports = function (grunt) {
                 map: true
             },
             test: {
-                src: '<%= testDir.base %>/css/*.css'
+                src: '<%= testOutput.css %>/*.css'
             }
         },
 
@@ -114,23 +121,31 @@ module.exports = function (grunt) {
                     '<%= testDir.testCases %>/Slideshow-footer.js',
                     '<%= testDir.testCases %>/footer.js'
                 ],
-                dest: '<%= testDir.base %>/js/test.js'
+                dest: '<%= testOutput.js %>/test.js'
             }
         },
 
         // 复制文件
         copy: {
+            build: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= dir.src %><%= dir.plugins %>',
+                    src: ['*.js'],
+                    dest: '<%= dir.build %><%= dir.plugins %>'
+                }]
+            },
             test: {
                 files: [{
                     expand: true,
                     cwd: '<%= testDir.js %>',
                     src: ['*.js'],
-                    dest: '<%= testDir.base %>/js'
+                    dest: '<%= testOutput.js %>'
                 }, {
                     expand: true,
                     cwd: '<%= testDir.images %>',
                     src: ['*.*'],
-                    dest: '<%= testDir.base %>/images'
+                    dest: '<%= testOutput.images %>'
                 }]
             },
             release: {
@@ -158,7 +173,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= dir.release %>',
-                    src: '*.js',
+                    src: '**/*.js',
                     dest: '<%= dir.release %>'
                 }]
             }
@@ -171,7 +186,8 @@ module.exports = function (grunt) {
     // build
     grunt.registerTask('build', 'Compile source', [
         'clean:build',
-        'concat:build'
+        'concat:build',
+        'copy:build'
     ]);
 
     // test

@@ -74,7 +74,7 @@
 | index      | 当前节点的一维索引      |
 | indexChain | 当前节点的链式索引值    |
 
-其中，`index` 和 `in的Chain` 的计算不包含根元素。
+其中，`index` 和 `indexChain` 的计算不包含根元素。
 
 ### NodeTree#wrap()
 

@@ -1,6 +1,6 @@
 {
   "name": "Slideshow",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A simple slideshow framework.",
   "license": "MIT",
   "dependencies": {
@@ -14,10 +14,20 @@
   "authors": [
     "Dolphin Wood <dolphin.w.e@gmail.com>"
   ],
-  "homepage": "https://idiotwu.me",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/idiotWu/idiotWu.git"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
-    "src/assets/vendor"
+    "_component",
+    "build",
+    "test/js",
+    "test/css",
+    "test/images"
+  ],
+  "keywords": [
+    "slideshow"
   ]
 }
