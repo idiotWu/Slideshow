@@ -11,13 +11,7 @@
         prevBtn = document.querySelector('.prev'),
         progressLine = document.querySelector('#progress .line'),
         nav = document.getElementById('slide-nav'),
-        main = document.getElementById('slideshow'),
-        keyMap = {
-            37: 'left',
-            38: 'up',
-            39: 'right',
-            40: 'down'
-        };
+        main = document.getElementById('slideshow');
 
     var previewList = timeLine.toTitleList('preview'),
         flattenList = Slideshow.finder('preview', previewList).flatten(),
@@ -92,6 +86,10 @@
         }
     });
 
+    previewList.addEventListener('touchmove', function (e) {
+        e.stopPropagation();
+    });
+
     document.getElementById('control')
         .addEventListener('click', function (e) {
             var type = e.target.className.match(/(prev|next)/);
@@ -100,18 +98,5 @@
                 Slideshow[type[0]]();
             }
         });
-
-    document.addEventListener('keydown', function (e) {
-        switch (keyMap[e.keyCode]) {
-            case 'left':
-            case 'up':
-                e.preventDefault();
-                return Slideshow.prev();
-            case 'right':
-            case 'down':
-                e.preventDefault();
-                return Slideshow.next();
-        }
-    });
 
 })(window.Slideshow);
