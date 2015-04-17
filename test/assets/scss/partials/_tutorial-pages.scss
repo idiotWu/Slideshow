@@ -6,7 +6,7 @@
   height: 100%;
   font-size: .5rem;
   transform: translate3d(0, 0, 0);
-  transition: all .5s ease-out;
+  transition: transform .5s ease-out;
 
   &.open {
     transform: translate3d($nav-width, 0, 0);

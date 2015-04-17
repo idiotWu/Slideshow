@@ -45,33 +45,27 @@ var Slideshow = function (Slideshow) {
     /**
      * 切换指定索引之前的所有元素的 class
      *
-     * @param {String} indexList: 递推式索引，同 ntr.getChild
+     * @param {NodeTree} targetNtr: 目标 NTR
      */
-    var showUntil = function (indexList) {
-        var indexArr = indexList.split('.'),
-            target = flow.getChild(indexArr[0]);
+    var showUntil = function (targetNtr) {
+        var indexArr = targetNtr.indexChain.split('.'),
+            parentNtr = flow.getChild(indexArr[0]);
 
-        if (!target) {
+        if (!parentNtr) {
             return;
         }
 
-        var ntrList = target.flatten(true),
-            length = ntrList.length - 1,
-            hasItem = false;
+        var ntrList = parentNtr.flatten(true),
+            targetIndex = targetNtr.index;
 
-        ntrList.forEach(function (ntr, index) {
-            var elem = ntr.element;
+        ntrList.forEach(function (ntr) {
+            var elem = ntr.element,
+                ntrIndex = ntr.index;
 
-            if (!hasItem) {
+            if (ntrIndex <= targetIndex) {
                 elem.classList.add('show');
 
-                if (ntr.indexChain === indexList) {
-                    hasItem = true;
-                    elem.classList.remove('played');
-                    return;
-                }
-
-                if (ntr.depth === 1 || index === length) {
+                if (ntr.depth === 1 || ntrIndex === targetIndex) {
                     elem.classList.remove('played');
                 } else {
                     elem.classList.add('played');
@@ -147,7 +141,7 @@ var Slideshow = function (Slideshow) {
             prevElem.classList.add('played');
 
             // 修正下一页面的状态
-            showUntil(nextIndexChain);
+            showUntil(nextNtr);
         } else {
             nextElem.classList.add('show');
         }
@@ -175,7 +169,7 @@ var Slideshow = function (Slideshow) {
 
         if (curNtr.depth === 1) {
             // 修正前一页面的状态
-            showUntil(prevNtr.indexChain);
+            showUntil(prevNtr);
         } else {
             prevElem.classList.remove('played');
         }
@@ -220,7 +214,7 @@ var Slideshow = function (Slideshow) {
         }
 
         // 显示目标链
-        showUntil(indexChain);
+        showUntil(targetNtr);
 
         // 修正首级元素的状态
         flow.children.forEach(function (ntr, index) {
