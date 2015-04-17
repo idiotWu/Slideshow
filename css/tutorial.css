@@ -68,8 +68,8 @@ strong {
   font-size: .5rem;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
-  -webkit-transition: all .5s ease-out;
-          transition: all .5s ease-out;
+  -webkit-transition: -webkit-transform .5s ease-out;
+          transition: transform .5s ease-out;
 }
 #slideshow.open {
   -webkit-transform: translate3d(4.4rem, 0, 0);
@@ -83,8 +83,8 @@ strong {
   height: 100%;
   -webkit-transform: translate3d(100%, 0, 0);
           transform: translate3d(100%, 0, 0);
-  -webkit-transition: all 1s ease-in-out;
-          transition: all 1s ease-in-out;
+  -webkit-transition: -webkit-transform 1s ease-in-out;
+          transition: transform 1s ease-in-out;
 }
 .pages.show {
   -webkit-transform: translate3d(0, 0, 0);
@@ -151,8 +151,8 @@ strong {
   background: #ffdead;
   padding: 0 3px;
   text-decoration: none;
-  -webkit-transition: all .3s;
-          transition: all .3s;
+  -webkit-transition: -webkit-transform .3s;
+          transition: transform .3s;
 }
 #no-ie:before {
   content: '';
@@ -212,9 +212,8 @@ figcaption {
 
 .arrow {
   cursor: pointer;
-  -webkit-transform: opacity .5s;
-      -ms-transform: opacity .5s;
-          transform: opacity .5s;
+  -webkit-transition: opacity .5s;
+          transition: opacity .5s;
 }
 .arrow:hover {
   opacity: .8;
@@ -418,16 +417,18 @@ code, pre {
   -webkit-animation-delay: 7.5s;
           animation-delay: 7.5s;
 }
+#effects .effect:nth-child(17) {
+  -webkit-transition-delay: 8s;
+          transition-delay: 8s;
+  -webkit-animation-delay: 8s;
+          animation-delay: 8s;
+}
 #effects:not(.show) .effect {
   opacity: 0;
   -webkit-animation: none;
           animation: none;
   -webkit-transition-delay: 0s;
           transition-delay: 0s;
-}
-#effects.played .effect {
-  -webkit-animation-play-state: paused;
-          animation-play-state: paused;
 }
 
 #progress {
@@ -442,11 +443,17 @@ code, pre {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0;
+  width: 100%;
   height: 100%;
   background: #3b759e;
-  -webkit-transition: width .3s ease-out;
-          transition: width .3s ease-out;
+  -webkit-transform-origin: left;
+      -ms-transform-origin: left;
+          transform-origin: left;
+  -webkit-transform: scaleX(0);
+      -ms-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transition: -webkit-transform .3s ease-out;
+          transition: transform .3s ease-out;
 }
 
 #slide-nav {
@@ -469,7 +476,7 @@ code, pre {
 }
 
 #open-nav {
-  position: absolute;
+    position: absolute;
   top: 10px;
   left: 10px;
   width: 45px;
@@ -559,8 +566,8 @@ code, pre {
   -webkit-transform: scale(0);
       -ms-transform: scale(0);
           transform: scale(0);
-  -webkit-transition: all .3s;
-          transition: all .3s;
+  -webkit-transition: -webkit-transform .3s;
+          transition: transform .3s;
 }
 #preview-list li.cur {
   color: #fff;

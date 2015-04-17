@@ -24,6 +24,12 @@
 
     currentElem.classList.add('cur');
 
+    var tmpl = [
+        '-webkit-transform: scaleX($)',
+        '-moz-transform: scaleX($)',
+        'transform: scaleX($)'
+    ].join(';');
+
     Slideshow.addListener(function (type, element, progress) {
         var currentNtr = this,
             curIndex = currentNtr.index,
@@ -34,7 +40,7 @@
         currentElem && currentElem.classList.remove('cur');
         currentElem = elem;
 
-        progressLine.style.width = progress * 100 + '%';
+        progressLine.style.cssText = tmpl.replace(/\$/g, progress);
 
         if (!curIndex) {
             prevBtn.classList.add('disable');
