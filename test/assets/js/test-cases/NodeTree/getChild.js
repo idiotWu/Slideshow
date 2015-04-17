@@ -7,8 +7,8 @@
 
 describe('#getChild', function () {
     it('should throw error when indexChain is illegal', function () {
-        expect(ntr.getChild).to.throw;
-        expect(ntr.getChild.bind(ntr, 'wrong')).to.throw;
+        expect(ntr.getChild).to.throw(TypeError);
+        expect(ntr.getChild.bind(ntr, 'wrong')).to.throw(TypeError);
     });
 
     it('should return null for unexisted item', function () {
@@ -18,6 +18,6 @@ describe('#getChild', function () {
     it('should return the right item', function () {
         var result = ntr.getChild('1.0.0.0');
         expect(result.indexChain).to.equal('1.0.0.0');
-        expect(result.element).to.equal(container.querySelector('[data-index-chain="1.0.0.0"]'));
+        expect(result.element).to.equal(markedElem);
     });
 });

@@ -44,4 +44,6 @@
         markedElem = container.querySelector('[data-index-chain="1.0.0.0"]'),
         elemCount = originElems.length,
         NodeTree = ntr.constructor,
-        every = Function.prototype.call.bind(Array.prototype.every);
+        every = Function.prototype.call.bind(Array.prototype.every),
+        assert = chai.assert,
+        expect = chai.expect;

@@ -7,8 +7,8 @@
 
 describe('.jumpTo()', function () {
     it('should throw error when indexChain is illegal', function () {
-        expect(Slideshow.jumpTo).to.throw;
-        expect(Slideshow.jumpTo.bind(ntr, 'wrong')).to.throw;
+        expect(Slideshow.jumpTo).to.throw(TypeError);
+        expect(Slideshow.jumpTo.bind(ntr, 'wrong')).to.throw(TypeError);
     });
 
     it('should jump to frame "1.0.0.0"', function () {
