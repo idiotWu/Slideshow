@@ -7,7 +7,7 @@
     backface-visibility: hidden;
   }
 
-  @for $i from 1 through 16 {
+  @for $i from 1 through 17 {
     .effect:nth-child(#{$i}) {
       transition-delay: ($i - 1) * .5s;
       animation-delay: ($i - 1) * .5s;
@@ -19,12 +19,6 @@
       opacity: 0;
       animation: none;
       transition-delay: 0s;
-    }
-  }
-
-  &.played {
-    .effect {
-      animation-play-state: paused;
     }
   }
 }

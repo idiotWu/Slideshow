@@ -15,6 +15,7 @@ describe('.removeListener', function () {
             Slideshow.removeListener();
 
             Slideshow.addListener(function () {
+                removeHash();
                 resolve(2);
             });
         });

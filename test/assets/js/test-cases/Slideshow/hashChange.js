@@ -17,7 +17,7 @@ describe('hashChange handler', function () {
             });
         });
 
-        history.forward()
+        history.forward();
 
         expect(new Promise(Slideshow.addListener)).to.eventually.equal('jump');
         expect(promise).to.eventually.equal(markedElem);

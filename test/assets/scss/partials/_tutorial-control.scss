@@ -6,7 +6,7 @@
 
 .arrow {
   cursor: pointer;
-  transform: opacity .5s;
+  transition: opacity .5s;
 
   &:hover {
     opacity: .8;

@@ -8,7 +8,7 @@
 
     var container = document.createElement('div');
 
-    var tmpl = [
+    container.innerHTML = [
         '<div class="a"></div>',
         '<div class="a">',
         '    <div class="a">',
@@ -37,8 +37,6 @@
         '</div>'
     ].join('');
 
-    container.innerHTML = tmpl;
-
     var ntr = Slideshow.finder('a', container),
         originElems = container.querySelectorAll('.a'),
         markedElem = container.querySelector('[data-index-chain="1.0.0.0"]'),
@@ -47,3 +45,7 @@
         every = Function.prototype.call.bind(Array.prototype.every),
         assert = chai.assert,
         expect = chai.expect;
+
+    var removeHash = function() {
+        history.pushState('', document.title, window.location.pathname);
+    }

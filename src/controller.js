@@ -46,9 +46,8 @@ var Slideshow = function (Slideshow) {
      * 切换指定索引之前的所有元素的 class
      *
      * @param {String} indexList: 递推式索引，同 ntr.getChild
-     * @param {Boolean} isRemoveClass: 为 true 时移除 class 'show'，否则添加 class 'show'
      */
-    var toggleUntil = function (indexList, isRemoveClass) {
+    var showUntil = function (indexList) {
         var indexArr = indexList.split('.'),
             target = flow.getChild(indexArr[0]);
 
@@ -63,26 +62,23 @@ var Slideshow = function (Slideshow) {
         ntrList.forEach(function (ntr, index) {
             var elem = ntr.element;
 
-            if (isRemoveClass) {
-                elem.classList.remove('show');
-                elem.classList.remove('played');
-                return;
-            }
-
             if (!hasItem) {
                 elem.classList.add('show');
-            } else {
-                elem.classList.remove('show');
-            }
 
-            if (ntr.depth === 1 || index === length) {
+                if (ntr.indexChain === indexList) {
+                    hasItem = true;
+                    elem.classList.remove('played');
+                    return;
+                }
+
+                if (ntr.depth === 1 || index === length) {
+                    elem.classList.remove('played');
+                } else {
+                    elem.classList.add('played');
+                }
+            } else {
                 elem.classList.remove('played');
-            } else {
-                elem.classList.add('played');
-            }
-
-            if (ntr.indexChain === indexList) {
-                hasItem = true;
+                elem.classList.remove('show');
             }
         });
     };
@@ -115,7 +111,7 @@ var Slideshow = function (Slideshow) {
                 // 异步调用，保证在 Slideshow 初始化完成后触发
                 try {
                     Slideshow.jumpTo(location.hash.slice(1));
-                } catch(e) {};
+                } catch (e) {};
             });
         }
 
@@ -139,20 +135,24 @@ var Slideshow = function (Slideshow) {
             nextIndexChain = nextNtr.indexChain;
 
         if (curNtr.depth !== 1) {
+            // 子项添加已播放标记
             curNtr.element.classList.add('played');
         }
 
         if (nextNtr.depth === 1) {
-            var prevNtr = flow.getChild(--nextIndexChain),
+            var prevNtr = flow.getChild(nextIndexChain - 1),
                 prevElem = prevNtr.element;
 
             prevElem.classList.remove('show');
             prevElem.classList.add('played');
+
+            // 修正下一页面的状态
+            showUntil(nextIndexChain);
+        } else {
+            nextElem.classList.add('show');
         }
 
         currentIndex++;
-
-        nextElem.classList.add('show');
 
         doCallback('next');
 
@@ -174,13 +174,13 @@ var Slideshow = function (Slideshow) {
             prevElem = prevNtr.element;
 
         if (curNtr.depth === 1) {
-            asap(function () {
-                toggleUntil(prevNtr.indexChain, false);
-            });
+            // 修正前一页面的状态
+            showUntil(prevNtr.indexChain);
+        } else {
+            prevElem.classList.remove('played');
         }
 
         curNtr.element.classList.remove('show');
-        prevElem.classList.remove('played');
 
         doCallback('prev');
 
@@ -211,27 +211,29 @@ var Slideshow = function (Slideshow) {
         }
 
         currentIndex = targetNtr.index;
-        var levelOneIndex = parseInt(indexChain.split('.')[0], 10);
 
-        asap(function () {
-            toggleUntil(curIndexChain, true);
+        var currentLevelOneIndex = curIndexChain.split('.')[0],
+            targetLevelOneIndex = indexChain.split('.')[0];
+
+        if (targetLevelOneIndex !== currentLevelOneIndex) {
+            flow.children[currentLevelOneIndex].element.classList.remove('show');
+        }
+
+        // 显示目标链
+        showUntil(indexChain);
+
+        // 修正首级元素的状态
+        flow.children.forEach(function (ntr, index) {
+            if (index < targetLevelOneIndex) {
+                ntr.element.classList.add('played');
+            } else {
+                ntr.element.classList.remove('played');
+            }
         });
-
-        asap(function () {
-            toggleUntil(indexChain, false);
-        });
-
-        asap(function () {
-            flow.children.forEach(function (ntr, index) {
-                if (index < levelOneIndex) {
-                    ntr.element.classList.add('played');
-                } else {
-                    ntr.element.classList.remove('played');
-                }
-            });
-        })
 
         doCallback('jump');
+
+        return targetNtr.element;
     };
 
     /**
