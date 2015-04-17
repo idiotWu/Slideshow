@@ -23,9 +23,7 @@
     "node_modules",
     "_component",
     "build",
-    "test/js",
-    "test/css",
-    "test/images"
+    "test"
   ],
   "keywords": [
     "slideshow"

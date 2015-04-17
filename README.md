@@ -2,6 +2,12 @@
 
 一款超轻量级的 JavaScript 幻灯片创建框架，助你摆脱 PowerPoint 令人作呕的动画控制！
 
+### 安装
+
+```
+bower install Slideshow.js
+```
+
 ## 兼容性
 
 - IE 10+

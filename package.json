@@ -6,7 +6,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node index",
     "test": "grunt --verbose",
     "postinstall": "bower install"
   },
