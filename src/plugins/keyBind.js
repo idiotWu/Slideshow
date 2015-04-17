@@ -9,10 +9,11 @@
     'use strict';
 
     var keyMap = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
+        enter: 13,
+        left: 37,
+        up: 38,
+        right: 39,
+        down: 40
     };
 
     var doThrottle = function (fn) {
@@ -41,13 +42,14 @@
 
     document.addEventListener('keydown', function (e) {
 
-        switch (keyMap[e.keyCode]) {
-            case 'left':
-            case 'up':
+        switch (e.keyCode) {
+            case keyMap.left:
+            case keyMap.up:
                 e.preventDefault();
                 return toPrev();
-            case 'right':
-            case 'down':
+            case keyMap.enter:
+            case keyMap.right:
+            case keyMap.down:
                 e.preventDefault();
                 return toNext();
         }
