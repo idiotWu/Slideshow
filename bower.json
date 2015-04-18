@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "A simple slideshow framework.",
   "license": "MIT",
+  "main": "./release/Slideshow.js",
   "dependencies": {},
   "devDependencies": {
     "animate.css": "~3.2.6",

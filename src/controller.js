@@ -255,10 +255,8 @@ var Slideshow = function (Slideshow) {
             asap(function () {
                 // 异步调用，保证在 Slideshow 初始化完成后触发
                 try {
-                    how.jumpTo(location.hash.slice(1));
-                } catch (e) {
-                }
-                ;
+                    Slideshow.jumpTo(location.hash.slice(1));
+                } catch (e) {}
             });
         }
 
