@@ -69,8 +69,6 @@ var Slideshow = function (Slideshow) {
         var timeStamp, mustRun;
 
         return function () {
-            clearTimeout(mustRun);
-
             var args = arguments,
                 now = (new Date).getTime();
 
@@ -82,14 +80,19 @@ var Slideshow = function (Slideshow) {
             var remain = 300 - (now - timeStamp);
 
             if (remain <= 0) {
+                clearTimeout(mustRun);
+                mustRun = undefined;
                 timeStamp = now;
                 return fn.apply(null, args);
             }
 
-            mustRun = setTimeout(function () {
-                timeStamp = (new Date).getTime();
-                fn.apply(null, args);
-            }, remain);
+            if (!mustRun) {
+                mustRun = setTimeout(function () {
+                    timeStamp = (new Date).getTime();
+                    mustRun = undefined;
+                    fn.apply(null, args);
+                }, remain);
+            }
         }
     };
 
