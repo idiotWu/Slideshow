@@ -16,42 +16,18 @@
         down: 40
     };
 
-    var doThrottle = function (fn) {
-        var timeStamp, mustRun;
-
-        return function () {
-            var now = (new Date).getTime();
-
-            if (!timeStamp) {
-                timeStamp = now;
-                return fn();
-            }
-
-            if (now - timeStamp > 100) {
-                clearTimeout(mustRun);
-                timeStamp = now;
-                return fn();
-            }
-
-            mustRun = setTimeout(fn, 100);
-        }
-    };
-
-    var toNext = doThrottle(Slideshow.next),
-        toPrev = doThrottle(Slideshow.prev);
-
     document.addEventListener('keydown', function (e) {
 
         switch (e.keyCode) {
             case keyMap.left:
             case keyMap.up:
                 e.preventDefault();
-                return toPrev();
+                return Slideshow.prev();
             case keyMap.enter:
             case keyMap.right:
             case keyMap.down:
                 e.preventDefault();
-                return toNext();
+                return Slideshow.next();
         }
     });
 })(window.Slideshow);

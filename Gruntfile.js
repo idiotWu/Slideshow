@@ -116,9 +116,9 @@ module.exports = function (grunt) {
                     '<%= testDir.testCases %>/NodeTree-init.js',
                     '<%= testDir.testCases %>/NodeTree/*.js',
                     '<%= testDir.testCases %>/NodeTree-footer.js',
-                    '<%= testDir.testCases %>/Slideshow-init.js',
-                    '<%= testDir.testCases %>/Slideshow/*.js',
-                    '<%= testDir.testCases %>/Slideshow-footer.js',
+                    //'<%= testDir.testCases %>/Slideshow-init.js',
+                    //'<%= testDir.testCases %>/Slideshow/*.js',
+                    //'<%= testDir.testCases %>/Slideshow-footer.js',
                     '<%= testDir.testCases %>/footer.js'
                 ],
                 dest: '<%= testOutput.js %>/test.js'

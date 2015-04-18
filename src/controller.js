@@ -13,7 +13,7 @@ var Slideshow = function (Slideshow) {
     var callbacks = [];
 
     /**
-     * 异步调用，减少迭代器带来的阻塞
+     * 异步调用
      *
      * @param {Function} fn
      */
@@ -21,25 +21,6 @@ var Slideshow = function (Slideshow) {
         if (fn && typeof fn === 'function') {
             setTimeout(fn, 0);
         }
-    };
-
-    /**
-     * 执行 onchange 回调
-     *
-     * @param {String} type: 变换类型
-     */
-    var doCallback = function (type) {
-        var currentNtr = flatFlow[currentIndex],
-            currentElem = currentNtr.element,
-            progress = currentIndex / length;
-
-        location.hash = currentNtr.indexChain;
-
-        callbacks.forEach(function (fn) {
-            asap(function () {
-                fn.call(currentNtr, type, currentElem, progress);
-            });
-        })
     };
 
     /**
@@ -78,38 +59,57 @@ var Slideshow = function (Slideshow) {
     };
 
     /**
-     * Slideshow 初始化
+     * 创建节流函数
      *
-     * @param {String} className: 目标元素的 class
-     * @param {Element} [startContainer]: 查找起始父节点，默认为 body
+     * @param {Function} fn: 目标函数
      *
-     * @return {NodeTree}
+     * @return {Function} 封装后的节流函数
      */
-    Slideshow.init = function (className, startContainer) {
-        if (!document.body.classList) {
-            throw new Error('unsupported browser');
+    var doThrottle = function (fn) {
+        var timeStamp, mustRun;
+
+        return function () {
+            clearTimeout(mustRun);
+
+            var args = arguments,
+                now = (new Date).getTime();
+
+            if (!timeStamp) {
+                timeStamp = now;
+                return fn.apply(null, args);
+            }
+
+            var remain = 300 - (now - timeStamp);
+
+            if (remain <= 0) {
+                timeStamp = now;
+                return fn.apply(null, args);
+            }
+
+            mustRun = setTimeout(function () {
+                timeStamp = (new Date).getTime();
+                fn.apply(null, args);
+            }, remain);
         }
+    };
 
-        flow = Slideshow.finder(className, startContainer);
-        flatFlow = flow.flatten();
-        currentIndex = 0;
-        length = flatFlow.length - 1;
-        callbacks.length = 0;
+    /**
+     * 执行 onchange 回调
+     *
+     * @param {String} type: 变换类型
+     */
+    var doCallback = function (type) {
+        var currentNtr = flatFlow[currentIndex],
+            currentElem = currentNtr.element,
+            progress = currentIndex / length;
 
-        if (flatFlow.length) {
-            flatFlow[0].element.classList.add('show');
-        }
+        location.hash = currentNtr.indexChain;
 
-        if (location.hash) {
+        callbacks.forEach(function (fn) {
             asap(function () {
-                // 异步调用，保证在 Slideshow 初始化完成后触发
-                try {
-                    Slideshow.jumpTo(location.hash.slice(1));
-                } catch (e) {};
+                fn.call(currentNtr, type, currentElem, progress);
             });
-        }
-
-        return flow;
+        })
     };
 
     /**
@@ -117,7 +117,7 @@ var Slideshow = function (Slideshow) {
      *
      * @return {Element | Null}: 下一帧的作用对象
      */
-    Slideshow.next = function () {
+    var toNext = function () {
         var nextNtr = flatFlow[currentIndex + 1];
 
         if (!nextNtr) {
@@ -149,8 +149,6 @@ var Slideshow = function (Slideshow) {
         currentIndex++;
 
         doCallback('next');
-
-        return nextElem;
     };
 
     /**
@@ -158,7 +156,7 @@ var Slideshow = function (Slideshow) {
      *
      * @return {Element | Null}: 上一帧的作用对象
      */
-    Slideshow.prev = function () {
+    var toPrev = function () {
         if (!currentIndex) {
             return null;
         }
@@ -177,8 +175,6 @@ var Slideshow = function (Slideshow) {
         curNtr.element.classList.remove('show');
 
         doCallback('prev');
-
-        return prevElem;
     };
 
     /**
@@ -186,7 +182,7 @@ var Slideshow = function (Slideshow) {
      *
      * @param {String | Number} indexChain: 递推式索引，同 ntr.getChild
      */
-    Slideshow.jumpTo = function (indexChain) {
+    var jumpTo = function (indexChain) {
         if (indexChain === undefined) {
             throw new TypeError('missing argument indexChain');
         }
@@ -226,8 +222,47 @@ var Slideshow = function (Slideshow) {
         });
 
         doCallback('jump');
+    };
 
-        return targetNtr.element;
+    Slideshow.next = doThrottle(toNext);
+    Slideshow.prev = doThrottle(toPrev);
+    Slideshow.jumpTo = doThrottle(jumpTo);
+
+    /**
+     * Slideshow 初始化
+     *
+     * @param {String} className: 目标元素的 class
+     * @param {Element} [startContainer]: 查找起始父节点，默认为 body
+     *
+     * @return {NodeTree}
+     */
+    Slideshow.init = function (className, startContainer) {
+        if (!document.body.classList) {
+            throw new Error('unsupported browser');
+        }
+
+        flow = Slideshow.finder(className, startContainer);
+        flatFlow = flow.flatten();
+        currentIndex = 0;
+        length = flatFlow.length - 1;
+        callbacks.length = 0;
+
+        if (flatFlow.length) {
+            flatFlow[0].element.classList.add('show');
+        }
+
+        if (location.hash) {
+            asap(function () {
+                // 异步调用，保证在 Slideshow 初始化完成后触发
+                try {
+                    how.jumpTo(location.hash.slice(1));
+                } catch (e) {
+                }
+                ;
+            });
+        }
+
+        return flow;
     };
 
     /**
@@ -236,7 +271,7 @@ var Slideshow = function (Slideshow) {
      * @param {Function} cb: 注册的监听函数
      */
     Slideshow.addListener = function (cb) {
-        if (!cb || typeof cb !== 'function') {
+        if (typeof cb !== 'function') {
             throw new TypeError('onchange listener must be a function')
         }
 
