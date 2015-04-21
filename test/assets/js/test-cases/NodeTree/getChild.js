@@ -9,6 +9,8 @@ describe('#getChild', function () {
     it('should throw error when indexChain is illegal', function () {
         expect(ntr.getChild).to.throw(TypeError);
         expect(ntr.getChild.bind(ntr, 'wrong')).to.throw(TypeError);
+        expect(ntr.getChild.bind(ntr, null)).to.throw(TypeError);
+        expect(ntr.getChild.bind(ntr, 0)).to.not.throw(TypeError);
     });
 
     it('should return null for unexisted item', function () {

@@ -186,7 +186,7 @@ var Slideshow = function (Slideshow) {
      * @param {String | Number} indexChain: 递推式索引，同 ntr.getChild
      */
     var jumpTo = function (indexChain) {
-        if (indexChain === undefined) {
+        if (!indexChain && indexChain !== 0) {
             throw new TypeError('missing argument indexChain');
         }
 

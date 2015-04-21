@@ -126,25 +126,26 @@ var Slideshow = function (Slideshow) {
      * 看我的降维攻击 (๑•̀ㅂ•́)✧
      *
      * @param {Boolean} [includeSelf]: 为 true 时数组首元素为自身
+     * @param {Array} [ret]: 需要扩充的数组
      *
      * @return {Array} 被拍平的 NodeTree
      */
-    NodeTree.prototype.flatten = function (includeSelf) {
-        var result = [];
+    NodeTree.prototype.flatten = function (includeSelf, ret) {
+        ret = ret || [];
 
         if (includeSelf) {
-            result.push(this);
+            ret.push(this);
         }
 
         this.children.forEach(function (ntr) {
-            result.push(ntr);
+            ret.push(ntr);
 
             if (ntr.children.length) {
-                result = result.concat(ntr.flatten(false));
+                ntr.flatten(false, ret);
             }
         });
 
-        return result;
+        return ret;
     };
 
     /**
@@ -155,7 +156,7 @@ var Slideshow = function (Slideshow) {
      * @return {NodeTree | Null}
      */
     NodeTree.prototype.getChild = function (indexChain) {
-        if (indexChain === undefined) {
+        if (!indexChain && indexChain !== 0) {
             throw new TypeError('missing argument indexList');
         }
 
