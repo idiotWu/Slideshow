@@ -205,27 +205,24 @@ var Slideshow = function (Slideshow) {
 
         ntr.index = 'root';
 
-        (function iterator(parentElem, parentNtr) {
+        return (function iterator(parentElem, parentNtr) {
 
             Array.prototype.forEach.call(parentElem.children, function (elem) {
-                var hasClass = elem.classList.contains(className),
-                    hasChildren = elem.childElementCount;
-
-                if (hasClass) {
+                if (elem.classList.contains(className)) {
                     var next = new NodeTree(elem, parentNtr, parentNtr.depth + 1);
                     next.index = count++;
                     parentNtr.children.push(next);
                     return iterator(elem, next);
                 }
 
-                if (hasChildren) {
+                if (elem.childElementCount) {
                     iterator(elem, parentNtr);
                 }
             });
 
-        })(startContainer, ntr);
+            return parentNtr;
 
-        return ntr;
+        })(startContainer, ntr);;
     };
 
     return Slideshow;

@@ -8,6 +8,10 @@
 bower install Slideshow.js
 ```
 
+### Showcase
+
+[https://idiotwu.me/got-to-fe/](https://idiotwu.me/got-to-fe/)
+
 ## 兼容性
 
 - IE 10+
