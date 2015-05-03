@@ -8,6 +8,9 @@
 var Slideshow = function (Slideshow) {
     'use strict';
 
+    var tmpl = '<a data-index-chain="{{indexChain}}" data-index="{{index}}" href="#{{indexChain}}">{{description}}</a>',
+        PATTERN = /\{{2}(.+?)\}{2}/g;
+
     /**
      * @constructor
      * 构造节点树
@@ -21,6 +24,7 @@ var Slideshow = function (Slideshow) {
         this.depth = depth || 0;
         this.parent = parentNtr;
         this.children = [];
+        this.description = element && element.getAttribute('data-title');
 
         if (parentNtr) {
             this.indexChain = (parentNtr.indexChain ? parentNtr.indexChain + '.' : '') + parentNtr.children.length;
@@ -80,13 +84,15 @@ var Slideshow = function (Slideshow) {
 
         var appendItem = function (list, ntr) {
             var item = document.createElement('li');
-            item.textContent = ntr.element.getAttribute('data-title');
-            item.setAttribute('data-index-chain', ntr.indexChain);
-            item.setAttribute('data-index', ntr.index);
+
             list.appendChild(item);
 
+            item.innerHTML = tmpl.replace(PATTERN, function (m, p) {
+                return ntr[p];
+            });
+
             if (className) {
-                item.className = className;
+                item.children[0].className = className;
             }
 
             return item;

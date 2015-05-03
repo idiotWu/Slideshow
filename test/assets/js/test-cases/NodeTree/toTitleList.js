@@ -21,7 +21,7 @@ describe('#toTitleList', function () {
     });
 
     it('attribute "data-index" of list item should be increased in order', function () {
-        var isInOrder = every(listBasic.querySelectorAll('li'), function (elem, index) {
+        var isInOrder = every(listBasic.querySelectorAll('a'), function (elem, index) {
             return index === parseInt(elem.getAttribute('data-index'));
         });
 
@@ -31,7 +31,7 @@ describe('#toTitleList', function () {
     var listWithClassName = ntr.toTitleList('test-class');
 
     it('all children should be created with class name "test-class"', function () {
-        var isRightClass = every(listWithClassName.querySelectorAll('li'), function (elem, index) {
+        var isRightClass = every(listWithClassName.querySelectorAll('a'), function (elem) {
             return elem.className === 'test-class';
         });
 
@@ -42,11 +42,11 @@ describe('#toTitleList', function () {
         listIncludeSelf = childNtr.toTitleList(undefined, true);
 
     it('first item of this should be the NTR itself', function () {
-        var indexChain = listIncludeSelf.children[0].getAttribute('data-index-chain');
+        var indexChain = listIncludeSelf.children[0].children[0].getAttribute('data-index-chain');
         expect(indexChain).to.equal(childNtr.indexChain);
     });
 
     it('and it is the only list item', function () {
-        expect(listIncludeSelf.children[0].children.length).to.equal(0);
+        expect(listIncludeSelf.children[0].children[0].children.length).to.equal(0);
     });
 });

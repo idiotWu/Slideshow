@@ -76,13 +76,15 @@ bower install Slideshow.js
 
 `NTR` 对象所带属性如下：
 
-| 属性名      | 解释                  |
-| :-----:     | :-----------------:    |
-| children   | 子元素节点组成的数组    |
-| depth      | 当前节点深度，从 0 开始 |
-| element    | 当前节点所对应的元素    |
-| index      | 当前节点的一维索引      |
-| indexChain | 当前节点的链式索引值    |
+| 属性名       | 解释                          |
+| :-----:     | :-----------------:           |
+| children    | 子元素节点组成的数组            |
+| parent      | 父节点对象                     |
+| depth       | 当前节点深度，从 0 开始         |
+| element     | 当前节点所对应的元素            |
+| index       | 当前节点的一维索引              |
+| indexChain  | 当前节点的链式索引值            |
+| description | 目标元素的 `data-title` 属性值 |
 
 其中，`index` 和 `indexChain` 的计算不包含根元素。
 
@@ -96,7 +98,7 @@ bower install Slideshow.js
 
 ### NodeTree#toTitleList( [String:className [, Boolean:includeSelf]] )
 
-返回一个有序列表 `<ol>` 元素，每个 `<li>` 元素的内容为当前 `NTR` 目标节点的 `data-title` 属性，并且指定 `data-index` 属性值为当前 `NTR` 对象的一维索引位置，`data-index-chain` 属性值为当前 `NTR` 对象的链式索引位置。
+返回一个有序列表 `<ol>` 元素，每个 `ol > li > a` 元素的内容为当前 `NTR` 目标节点的 `data-title` 属性，并且指定 `data-index` 属性值为当前 `NTR` 对象的一维索引位置，`data-index-chain` 属性值为当前 `NTR` 对象的链式索引位置。
 
 当指定 `className` 时，返回列表中的 `<li>` 元素会被指定为该 class。
 
