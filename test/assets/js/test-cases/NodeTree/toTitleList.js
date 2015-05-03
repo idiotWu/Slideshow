@@ -22,6 +22,7 @@ describe('#toTitleList', function () {
 
     it('attribute "data-index" of list item should be increased in order', function () {
         var isInOrder = every(listBasic.querySelectorAll('a'), function (elem, index) {
+            console.log(elem)
             return index === parseInt(elem.getAttribute('data-index'));
         });
 

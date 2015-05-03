@@ -8,9 +8,6 @@
 var Slideshow = function (Slideshow) {
     'use strict';
 
-    var tmpl = '<a data-index-chain="{{indexChain}}" data-index="{{index}}" href="#{{indexChain}}">{{description}}</a>',
-        PATTERN = /\{{2}(.+?)\}{2}/g;
-
     /**
      * @constructor
      * 构造节点树
@@ -75,20 +72,29 @@ var Slideshow = function (Slideshow) {
      *
      * @return {Element | Null} 结果列表
      */
-    NodeTree.prototype.toTitleList = function (className, includeSelf) {
-        var hasChild = this.children.length;
+    NodeTree.prototype.toTitleList = (function () {
 
-        if (!hasChild && !includeSelf) {
-            return null;
-        }
+        var tmpl = '<a data-index-chain="{{indexChain}}" data-index="{{index}}" href="#{{indexChain}}">{{description}}</a>',
+            PATTERN = /\{{2}(.+?)\}{2}/g;
 
-        var appendItem = function (list, ntr) {
+        /**
+         * 向列表中追加元素
+         *
+         * @param {Element} list: 目标列表
+         * @param {NodeTree} ntr: 来源 NTR 对象
+         * @param {String} [className]: 目标 class name
+         *
+         * @return {Element} list item
+         */
+        var appendListItem = function (list, ntr, className) {
             var item = document.createElement('li');
 
             list.appendChild(item);
 
             item.innerHTML = tmpl.replace(PATTERN, function (m, p) {
-                return ntr[p];
+                var value = ntr[p];
+
+                return (!value && value !== 0) ? '' : value;
             });
 
             if (className) {
@@ -98,60 +104,65 @@ var Slideshow = function (Slideshow) {
             return item;
         };
 
-        var listWrap = document.createElement('ol');
+        return function (className, includeSelf, wrapper) {
+            var hasChild = this.children.length;
 
-        var target;
-
-        if (includeSelf && this.depth) {
-            var listItem = appendItem(listWrap, this);
-
-            if (hasChild) {
-                target = document.createElement('ol');
-                listItem.appendChild(target);
+            if (!hasChild && !includeSelf) {
+                return null;
             }
-        }
 
-        target = target || listWrap;
+            wrapper = wrapper || document.createElement('ol');
 
-        this.children.forEach(function (ntr) {
-            var item = appendItem(target, ntr);
+            var target = wrapper;
 
-            if (ntr.children.length) {
-                var next = ntr.toTitleList(className, false);
-                if (next) {
-                    item.appendChild(next);
+            if (includeSelf && this.depth) {
+                var listItem = appendListItem(wrapper, this, className);
+
+                if (hasChild) {
+                    target = document.createElement('ol');
+                    listItem.appendChild(target);
                 }
             }
-        });
 
-        return listWrap;
-    };
+            this.children.forEach(function (ntr) {
+                var item = appendListItem(target, ntr, className);
+
+                if (ntr.children.length) {
+                    var newList = document.createElement('ol');
+                    item.appendChild(newList);
+                    ntr.toTitleList(className, false, newList);
+                }
+            });
+
+            return wrapper;
+        };
+    })();
 
     /**
      * 返回一维化的 NodeTree
      * 看我的降维攻击 (๑•̀ㅂ•́)✧
      *
      * @param {Boolean} [includeSelf]: 为 true 时数组首元素为自身
-     * @param {Array} [ret]: 需要扩充的数组
+     * @param {Array} [extend]: 需要扩充的数组
      *
      * @return {Array} 被拍平的 NodeTree
      */
-    NodeTree.prototype.flatten = function (includeSelf, ret) {
-        ret = ret || [];
+    NodeTree.prototype.flatten = function (includeSelf, extend) {
+        extend = extend || [];
 
         if (includeSelf) {
-            ret.push(this);
+            extend.push(this);
         }
 
         this.children.forEach(function (ntr) {
-            ret.push(ntr);
+            extend.push(ntr);
 
             if (ntr.children.length) {
-                ntr.flatten(false, ret);
+                ntr.flatten(false, extend);
             }
         });
 
-        return ret;
+        return extend;
     };
 
     /**
@@ -228,7 +239,8 @@ var Slideshow = function (Slideshow) {
 
             return parentNtr;
 
-        })(startContainer, ntr);;
+        })(startContainer, ntr);
+        ;
     };
 
     return Slideshow;
