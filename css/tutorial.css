@@ -476,7 +476,7 @@ code, pre {
 }
 
 #open-nav {
-    position: absolute;
+  position: absolute;
   top: 10px;
   left: 10px;
   width: 45px;
@@ -534,26 +534,33 @@ code, pre {
   top: 1.3em !important;
 }
 #preview-list li {
-  position: relative;
-  padding: 0 1em;
-  cursor: pointer;
-  line-height: 2;
   list-style: none;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  -webkit-transition: color .3s;
-          transition: color .3s;
 }
 #preview-list li:last-child {
   border-bottom: none;
 }
-#preview-list li:before {
+#preview-list a {
+  display: inline-block;
+  position: relative;
+  padding: 0 1em;
+  line-height: 2;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  text-decoration: none;
+  color: #909090;
+  -webkit-transition: color .3s;
+          transition: color .3s;
+}
+#preview-list a:before {
   content: attr(data-index-chain);
   padding-right: 1em;
 }
-#preview-list li:after {
+#preview-list a:hover {
+  color: #fff;
+}
+#preview-list a:after {
   content: '';
   position: absolute;
   width: .5em;
@@ -569,21 +576,14 @@ code, pre {
   -webkit-transition: -webkit-transform .3s;
           transition: transform .3s;
 }
-#preview-list li.cur {
+#preview-list a.cur {
   color: #fff;
 }
-#preview-list li.cur:after {
+#preview-list a.cur:after {
   opacity: 1;
   -webkit-transform: scale(1);
       -ms-transform: scale(1);
           transform: scale(1);
 }
-#preview-list li.cur > ol {
-  color: #909090;
-}
-#preview-list li:hover {
-  color: #fff;
-}
-#preview-list li:hover > ol {
-  color: #909090;
-}
+
+/*# sourceMappingURL=tutorial.css.map */

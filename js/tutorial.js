@@ -84,14 +84,6 @@
             }
         });
 
-    previewList.addEventListener('click', function (e) {
-        var indexChain = e.target.getAttribute('data-index-chain');
-
-        if (indexChain) {
-            Slideshow.jumpTo(indexChain);
-        }
-    });
-
     previewList.addEventListener('touchmove', function (e) {
         e.stopPropagation();
     });
