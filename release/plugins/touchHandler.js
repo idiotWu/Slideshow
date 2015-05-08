@@ -3,7 +3,7 @@
  * A simple slideshow framework.
  * 
  * @author Dolphin Wood https://idiotwu.me
- * @version 0.2.0
+ * @version 0.3.0
  * Copyright 2015. MIT licensed.
  */
-!function(a){"use strict";var b,c,d=function(a){var b=a.touches?a.touches[0]:a;return{x:b.pageX,y:b.pageY}},e=function(a){b=d(a)},f=function(a){if(b){a.preventDefault();var e=d(a);if(!c)return void(c=e);(b.x<e.x&&e.x<c.x||b.x>e.x&&e.x>c.x)&&(b.x=c.x),(b.y<e.y&&e.y<c.y||b.y>e.y&&e.y>c.y)&&(b.y=c.y),c=e}},g=function(){if(c){var d={x:c.x-b.x,y:c.y-b.y};if(b=c=null,!(Math.abs(d.x)<30&&Math.abs(d.y)<30)){if(Math.abs(d.x)>30&&Math.abs(d.y)<75)return d.x>0?a.prev():a.next();if(Math.abs(d.y)>30&&Math.abs(d.x)<75)return d.y>0?a.prev():a.next();var e=Math.abs(d.x)>Math.abs(d.y)?d.x:d.y;return e>0?a.prev():a.next()}}};document.addEventListener("touchstart",e),document.addEventListener("touchmove",f),document.addEventListener("touchend",g),document.addEventListener("mousedown",e),document.addEventListener("mousemove",f),document.addEventListener("mouseup",g)}(window.Slideshow);
+!function(a,b){"use strict";var c=!1;b.registerPlugin("touchhandler",function(){if(!c){c=!0;var b,d,e=this,f=function(a){var b=a.touches?a.touches[0]:a;return{x:b.pageX,y:b.pageY}},g=function(a){b=f(a)},h=function(a){if(b){a.preventDefault();var c=f(a);if(!d)return void(d=c);(b.x<c.x&&c.x<d.x||b.x>c.x&&c.x>d.x)&&(b.x=d.x),(b.y<c.y&&c.y<d.y||b.y>c.y&&c.y>d.y)&&(b.y=d.y),d=c}},i=function(){if(d){var a={x:d.x-b.x,y:d.y-b.y};if(b=d=null,!(Math.abs(a.x)<30&&Math.abs(a.y)<30)){if(Math.abs(a.x)>30&&Math.abs(a.y)<75)return a.x>0?e.prev():e.next();if(Math.abs(a.y)>30&&Math.abs(a.x)<75)return a.y>0?e.prev():e.next();var c=Math.abs(a.x)>Math.abs(a.y)?a.x:a.y;return c>0?e.prev():e.next()}}};a.addEventListener("touchstart",g),a.addEventListener("touchmove",h),a.addEventListener("touchend",i),a.addEventListener("mousedown",g),a.addEventListener("mousemove",h),a.addEventListener("mouseup",i)}})}(document,Slideshow);

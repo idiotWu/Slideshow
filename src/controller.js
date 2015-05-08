@@ -12,6 +12,8 @@ var Slideshow = function (Slideshow) {
 
     var callbacks = [];
 
+    var plugins = {};
+
     /**
      * 异步调用
      *
@@ -20,6 +22,15 @@ var Slideshow = function (Slideshow) {
     var asap = function (fn) {
         if (fn && typeof fn === 'function') {
             setTimeout(fn, 0);
+        }
+    };
+
+    /**
+     * 执行 plugin function
+     */
+    var execPlugins = function () {
+        for (var key in plugins) {
+            plugins[key].call(Slideshow, flow);
         }
     };
 
@@ -259,9 +270,12 @@ var Slideshow = function (Slideshow) {
                 // 异步调用，保证在 Slideshow 初始化完成后触发
                 try {
                     Slideshow.jumpTo(location.hash.slice(1));
-                } catch (e) {}
+                } catch (e) {
+                }
             });
         }
+
+        execPlugins();
 
         return flow;
     };
@@ -286,17 +300,41 @@ var Slideshow = function (Slideshow) {
         callbacks.length = 0;
     };
 
-    // 监听 hashchange
-    window.addEventListener('hashchange', function () {
-        var indexChain = location.hash.slice(1),
-            curIndexChain = flatFlow[currentIndex].indexChain;
-
-        if (!indexChain || indexChain === curIndexChain) {
-            return;
+    /**
+     * 注册拓展
+     *
+     * @param {String} name
+     * @param {Function} fn
+     */
+    Slideshow.registerPlugin = function (name, fn) {
+        if (typeof name !== 'string') {
+            throw new TypeError('the 1st parameter should be a string');
+        }
+        if (typeof fn !== 'function') {
+            throw new TypeError('the 2nd parameter should be a function');
         }
 
-        Slideshow.jumpTo(indexChain);
-    });
+        plugins[name] = fn;
+    };
+
+    /**
+     * 得到当前所注册的所有拓展
+     *
+     * @return {Object} plugins
+     */
+    Slideshow.getAllPlugins = function () {
+        return plugins;
+    };
+
+    /**
+     * 得到当前帧
+     *
+     * @return {NodeTree}
+     */
+    Slideshow.getCurrentFrame = function () {
+        return flatFlow[currentIndex];
+    };
+
 
     return Slideshow;
 }(window.Slideshow || {});

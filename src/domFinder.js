@@ -75,7 +75,7 @@ var Slideshow = function (Slideshow) {
     NodeTree.prototype.toTitleList = (function () {
 
         var tmpl = '<a data-index-chain="{{indexChain}}" data-index="{{index}}" href="#{{indexChain}}">{{description}}</a>',
-            PATTERN = /\{{2}(.+?)\}{2}/g;
+            PATTERN = /\{{2}([^}]+)\}{2}/g;
 
         /**
          * 向列表中追加元素
@@ -220,7 +220,7 @@ var Slideshow = function (Slideshow) {
         var ntr = new NodeTree(),
             count = 0;
 
-        ntr.index = 'root';
+        ntr.index = undefined;
 
         return (function iterator(parentElem, parentNtr) {
 

@@ -5,95 +5,109 @@
  * 为 Slideshow 添加触摸和鼠标事件监听
  */
 
-(function (Slideshow) {
+(function (document, Slideshow) {
     'use strict';
 
-    var getPos = function (event) {
-        var data = event.touches ? event.touches[0] : event;
+    var pluginLoaded = false;
 
-        return {
-            x: data.pageX,
-            y: data.pageY
-        }
-    };
-
-    var startPos, endPos;
-
-    var setStart = function (event) {
-        startPos = getPos(event);
-    };
-
-    var setMove = function (event) {
-        if (!startPos) {
+    Slideshow.registerPlugin('touchhandler', function () {
+        if (pluginLoaded) {
             return;
         }
 
-        event.preventDefault();
-        var curPos = getPos(event);
+        pluginLoaded = true;
 
-        if (!endPos) {
-            endPos = curPos;
-            return;
-        }
+        var me = this;
 
-        if ((startPos.x < curPos.x && curPos.x < endPos.x) ||
-           (startPos.x > curPos.x && curPos.x > endPos.x)) {
-            //     +
-            // <<<<<
-            // >>
-            //
-            // or
-            //
-            //     +
-            //     >>>>>>
-            //         <<
-            startPos.x = endPos.x;
-        }
+        var getPos = function (event) {
+            var data = event.touches ? event.touches[0] : event;
 
-        if ((startPos.y < curPos.y && curPos.y < endPos.y) ||
-            (startPos.y > curPos.y && curPos.y > endPos.y)) {
-            startPos.y = endPos.y;
-        }
-
-        endPos = curPos;
-    };
-
-    var setEnd = function () {
-        if (!endPos) {
-            return;
-        }
-
-        var moved = {
-            x: endPos.x - startPos.x,
-            y: endPos.y - startPos.y
+            return {
+                x: data.pageX,
+                y: data.pageY
+            }
         };
 
-        startPos = endPos = null;
+        var startPos, endPos;
 
-        if (Math.abs(moved.x) < 30 && Math.abs(moved.y) < 30) {
-            return;
-        }
+        var setStart = function (event) {
+            startPos = getPos(event);
+        };
 
-        if (Math.abs(moved.x) > 30 && Math.abs(moved.y) < 75) {
-            // horizontal
-            return moved.x > 0 ? Slideshow.prev() : Slideshow.next();
-        }
+        var setMove = function (event) {
+            if (!startPos) {
+                return;
+            }
 
-        if (Math.abs(moved.y) > 30 && Math.abs(moved.x) < 75) {
-            // horizontal
-            return moved.y > 0 ? Slideshow.prev() : Slideshow.next();
-        }
+            event.preventDefault();
+            var curPos = getPos(event);
 
-        var winner = Math.abs(moved.x) > Math.abs(moved.y) ? moved.x : moved.y;
+            if (!endPos) {
+                endPos = curPos;
+                return;
+            }
 
-        return winner > 0 ? Slideshow.prev() : Slideshow.next();
-    };
+            if ((startPos.x < curPos.x && curPos.x < endPos.x) ||
+                (startPos.x > curPos.x && curPos.x > endPos.x)) {
+                //     +
+                // <<<<<
+                // >>
+                //
+                // or
+                //
+                //     +
+                //     >>>>>>
+                //         <<
+                startPos.x = endPos.x;
+            }
 
-    document.addEventListener('touchstart', setStart);
-    document.addEventListener('touchmove', setMove);
-    document.addEventListener('touchend', setEnd);
+            if ((startPos.y < curPos.y && curPos.y < endPos.y) ||
+                (startPos.y > curPos.y && curPos.y > endPos.y)) {
+                startPos.y = endPos.y;
+            }
 
-    document.addEventListener('mousedown', setStart);
-    document.addEventListener('mousemove', setMove);
-    document.addEventListener('mouseup', setEnd);
-})(window.Slideshow);
+            endPos = curPos;
+        };
+
+        var setEnd = function () {
+            if (!endPos) {
+                return;
+            }
+
+            var moved = {
+                x: endPos.x - startPos.x,
+                y: endPos.y - startPos.y
+            };
+
+            startPos = endPos = null;
+
+            if (Math.abs(moved.x) < 30 && Math.abs(moved.y) < 30) {
+                return;
+            }
+
+            if (Math.abs(moved.x) > 30 && Math.abs(moved.y) < 75) {
+                // horizontal
+                return moved.x > 0 ? me.prev() : me.next();
+            }
+
+            if (Math.abs(moved.y) > 30 && Math.abs(moved.x) < 75) {
+                // vertical
+                return moved.y > 0 ? me.prev() : me.next();
+            }
+
+            var winner = Math.abs(moved.x) > Math.abs(moved.y) ? moved.x : moved.y;
+
+            return winner > 0 ? me.prev() : me.next();
+        };
+
+        document.addEventListener('touchstart', setStart);
+        document.addEventListener('touchmove', setMove);
+        document.addEventListener('touchend', setEnd);
+
+        document.addEventListener('mousedown', setStart);
+        document.addEventListener('mousemove', setMove);
+        document.addEventListener('mouseup', setEnd);
+    });
+
+})(document, Slideshow);
+
