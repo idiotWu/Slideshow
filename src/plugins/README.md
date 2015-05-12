@@ -1,3 +1,5 @@
+# APIs
+
 该文档包含了部署在 `Slideshow` 对象下的静态方法与 `NodeTree` 构造函数下的实例方法。
 
 ## 格式约定
@@ -100,11 +102,13 @@
 
 其中，`index` 和 `indexChain` 的计算不包含根元素。
 
-### NodeTree#flatten( [Boolean:includeSelf] )
+### NodeTree#flatten( [Boolean:includeSelf, [Array:extend]] )
 
 返回一维化的 `NTR` 对象。
 
 指定 `includeSelf = true` 可使结果数组首元素为当前 `NTR` 对象自身。
+
+指定 `extend` 可对原有数组进行拓展。
 
 ### NodeTree#getChild( String:indexChain )
 

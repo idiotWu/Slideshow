@@ -104,14 +104,14 @@ var Slideshow = function (Slideshow) {
             return item;
         };
 
-        return function (className, includeSelf, wrapper) {
+        return function (className, includeSelf) {
             var hasChild = this.children.length;
 
             if (!hasChild && !includeSelf) {
                 return null;
             }
 
-            wrapper = wrapper || document.createElement('ol');
+            var wrapper = document.createElement('ol');
 
             var target = wrapper;
 
@@ -128,9 +128,7 @@ var Slideshow = function (Slideshow) {
                 var item = appendListItem(target, ntr, className);
 
                 if (ntr.children.length) {
-                    var newList = document.createElement('ol');
-                    item.appendChild(newList);
-                    ntr.toTitleList(className, false, newList);
+                    item.appendChild(ntr.toTitleList(className));
                 }
             });
 
@@ -240,7 +238,6 @@ var Slideshow = function (Slideshow) {
             return parentNtr;
 
         })(startContainer, ntr);
-        ;
     };
 
     return Slideshow;

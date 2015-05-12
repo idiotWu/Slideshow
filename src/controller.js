@@ -332,7 +332,7 @@ var Slideshow = function (Slideshow) {
      * @return {NodeTree}
      */
     Slideshow.getCurrentFrame = function () {
-        return flatFlow[currentIndex];
+        return flatFlow && flatFlow[currentIndex];
     };
 
 

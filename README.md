@@ -66,7 +66,7 @@ bower install Slideshow.js
 
 ## APIs
 
-[参见此处](https://github.com/idiotWu/Slideshow/tree/master/src/plugins/API.md)
+[参见此处](https://github.com/idiotWu/Slideshow/tree/master/src/plugins)
 
 
 ## Q&A
